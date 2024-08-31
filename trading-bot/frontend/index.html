@@ -3,144 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trading Bot Web Interface</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <title>Trading Bot Interface</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body class="bg-gray-100">
-    <div id="app" class="container mx-auto p-4">
+    <div class="container mx-auto p-4">
         <h1 class="text-3xl font-bold mb-4">Trading Bot Dashboard</h1>
         
-        <!-- Authentication section remains the same -->
-        
-        <div id="github-strategy-section" class="mb-8">
-            <h2 class="text-xl font-semibold mb-2">GitHub Strategy Selection</h2>
-            <div class="flex space-x-2 mb-2">
-                <input type="text" id="github-owner" placeholder="GitHub Owner" class="border p-2 rounded">
-                <input type="text" id="github-repo" placeholder="GitHub Repo" class="border p-2 rounded">
-                <input type="text" id="github-path" placeholder="Path (optional)" class="border p-2 rounded">
-                <button id="fetch-strategies-btn" class="bg-blue-500 text-white px-4 py-2 rounded">Fetch Strategies</button>
-            </div>
-            <select id="github-strategies" class="w-full border p-2 rounded mb-2">
+        <div class="mb-4">
+            <h2 class="text-xl font-semibold mb-2">Authentication</h2>
+            <input type="text" id="username" placeholder="Username" class="border p-2 rounded mr-2">
+            <input type="password" id="password" placeholder="Password" class="border p-2 rounded mr-2">
+            <button onclick="login()" class="bg-blue-500 text-white px-4 py-2 rounded">Login</button>
+        </div>
+
+        <div class="mb-4">
+            <h2 class="text-xl font-semibold mb-2">Strategy Selection</h2>
+            <select id="strategy-select" class="border p-2 rounded mr-2">
                 <option value="">Select a strategy</option>
+                <!-- Strategies will be populated here -->
             </select>
-            <div id="strategy-preview" class="bg-white p-4 rounded shadow hidden">
-                <h3 class="text-lg font-semibold mb-2">Strategy Preview</h3>
-                <pre id="strategy-code" class="bg-gray-100 p-2 rounded"></pre>
-            </div>
+            <button onclick="fetchStrategies()" class="bg-green-500 text-white px-4 py-2 rounded">Fetch Strategies</button>
         </div>
-        
-        <div id="trading-section" class="mb-8">
+
+        <div class="mb-4">
             <h2 class="text-xl font-semibold mb-2">Trading Controls</h2>
-            <div class="flex space-x-2">
-                <input type="text" id="api-key" placeholder="API Key" class="border p-2 rounded">
-                <input type="text" id="api-secret" placeholder="API Secret" class="border p-2 rounded">
-                <input type="text" id="symbol" placeholder="Symbol (e.g., BTC/USD)" class="border p-2 rounded">
-                <input type="number" id="initial-balance" placeholder="Initial Balance" class="border p-2 rounded">
-                <select id="trading-mode" class="border p-2 rounded">
-                    <option value="simulation">Simulation</option>
-                    <option value="real">Real Trading</option>
-                </select>
-                <button id="start-trading-btn" class="bg-green-500 text-white px-4 py-2 rounded">Start Trading</button>
-                <button id="stop-trading-btn" class="bg-red-500 text-white px-4 py-2 rounded">Stop Trading</button>
+            <input type="text" id="symbol" placeholder="Symbol (e.g., BTC/USD)" class="border p-2 rounded mr-2">
+            <input type="number" id="amount" placeholder="Amount" class="border p-2 rounded mr-2">
+            <button onclick="startTrading()" class="bg-purple-500 text-white px-4 py-2 rounded">Start Trading</button>
+            <button onclick="stopTrading()" class="bg-red-500 text-white px-4 py-2 rounded">Stop Trading</button>
+        </div>
+
+        <div>
+            <h2 class="text-xl font-semibold mb-2">Trading Log</h2>
+            <div id="trading-log" class="bg-white p-4 rounded shadow h-40 overflow-y-auto">
+                <!-- Trading logs will appear here -->
             </div>
         </div>
-        
-        <!-- Data analysis section remains the same -->
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script>
-        // Add event listeners and implement the following functions:
-        // 1. fetchGitHubStrategies() - Fetch strategies from GitHub when the "Fetch Strategies" button is clicked
-        // 2. updateStrategyPreview() - Update the strategy preview when a strategy is selected
-        // 3. startTrading() - Start trading with the selected strategy when the "Start Trading" button is clicked
-        // 4. stopTrading() - Stop trading when the "Stop Trading" button is clicked
-        
-        document.getElementById('fetch-strategies-btn').addEventListener('click', fetchGitHubStrategies);
-        document.getElementById('github-strategies').addEventListener('change', updateStrategyPreview);
-        document.getElementById('start-trading-btn').addEventListener('click', startTrading);
-        document.getElementById('stop-trading-btn').addEventListener('click', stopTrading);
-
-        async function fetchGitHubStrategies() {
-            const owner = document.getElementById('github-owner').value;
-            const repo = document.getElementById('github-repo').value;
-            const path = document.getElementById('github-path').value;
-
-            try {
-                const response = await axios.get(`/github_strategies?owner=${owner}&repo=${repo}&path=${path}`);
-                const strategies = response.data;
-                const select = document.getElementById('github-strategies');
-                select.innerHTML = '<option value="">Select a strategy</option>';
-                strategies.forEach(strategy => {
-                    const option = document.createElement('option');
-                    option.value = strategy;
-                    option.textContent = strategy;
-                    select.appendChild(option);
-                });
-            } catch (error) {
-                console.error('Error fetching strategies:', error);
-                alert('Failed to fetch strategies from GitHub');
-            }
+        // Placeholder functions - these would normally communicate with your backend
+        async function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            alert(`Login attempted with username: ${username}`);
+            // In a real app, you'd make an API call here
         }
 
-        async function updateStrategyPreview() {
-            const strategyName = document.getElementById('github-strategies').value;
-            if (!strategyName) {
-                document.getElementById('strategy-preview').classList.add('hidden');
-                return;
-            }
-
-            const owner = document.getElementById('github-owner').value;
-            const repo = document.getElementById('github-repo').value;
-            const path = document.getElementById('github-path').value;
-
-            try {
-                const response = await axios.get(`/fetch_strategy?owner=${owner}&repo=${repo}&path=${path}/${strategyName}`);
-                const strategyCode = response.data.code;
-                document.getElementById('strategy-code').textContent = strategyCode;
-                document.getElementById('strategy-preview').classList.remove('hidden');
-            } catch (error) {
-                console.error('Error fetching strategy:', error);
-                alert('Failed to fetch strategy code from GitHub');
-            }
+        async function fetchStrategies() {
+            // Simulating fetching strategies
+            const strategies = ['Strategy 1', 'Strategy 2', 'Strategy 3'];
+            const select = document.getElementById('strategy-select');
+            select.innerHTML = '<option value="">Select a strategy</option>';
+            strategies.forEach(strategy => {
+                const option = document.createElement('option');
+                option.value = strategy;
+                option.textContent = strategy;
+                select.appendChild(option);
+            });
+            alert('Strategies fetched');
         }
 
         async function startTrading() {
-            const strategyName = document.getElementById('github-strategies').value;
-            if (!strategyName) {
-                alert('Please select a strategy before starting trading');
-                return;
-            }
-
-            const tradingData = {
-                github_owner: document.getElementById('github-owner').value,
-                github_repo: document.getElementById('github-repo').value,
-                github_path: `${document.getElementById('github-path').value}/${strategyName}`,
-                api_key: document.getElementById('api-key').value,
-                api_secret: document.getElementById('api-secret').value,
-                symbol: document.getElementById('symbol').value,
-                initial_balance: document.getElementById('initial-balance').value,
-                mode: document.getElementById('trading-mode').value,
-                timeframe: '1m', // You might want to make this configurable
-            };
-
-            try {
-                const response = await axios.post('/start_trading', tradingData);
-                alert(response.data.message);
-            } catch (error) {
-                console.error('Error starting trading:', error);
-                alert('Failed to start trading');
-            }
+            const strategy = document.getElementById('strategy-select').value;
+            const symbol = document.getElementById('symbol').value;
+            const amount = document.getElementById('amount').value;
+            const log = `Started trading with strategy: ${strategy}, symbol: ${symbol}, amount: ${amount}`;
+            document.getElementById('trading-log').innerHTML += `<p>${log}</p>`;
         }
 
         async function stopTrading() {
-            try {
-                const response = await axios.post('/stop_trading');
-                alert(response.data.message);
-            } catch (error) {
-                console.error('Error stopping trading:', error);
-                alert('Failed to stop trading');
-            }
+            const log = 'Trading stopped';
+            document.getElementById('trading-log').innerHTML += `<p>${log}</p>`;
         }
     </script>
 </body>
