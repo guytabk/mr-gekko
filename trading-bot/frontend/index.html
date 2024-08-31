@@ -1,83 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trading Bot Interface</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</head>
-<body class="bg-gray-100">
-    <div class="container mx-auto p-4">
-        <h1 class="text-3xl font-bold mb-4">Trading Bot Dashboard</h1>
-        
-        <div class="mb-4">
-            <h2 class="text-xl font-semibold mb-2">Authentication</h2>
-            <input type="text" id="username" placeholder="Username" class="border p-2 rounded mr-2">
-            <input type="password" id="password" placeholder="Password" class="border p-2 rounded mr-2">
-            <button onclick="login()" class="bg-blue-500 text-white px-4 py-2 rounded">Login</button>
-        </div>
+html
 
-        <div class="mb-4">
-            <h2 class="text-xl font-semibold mb-2">Strategy Selection</h2>
-            <select id="strategy-select" class="border p-2 rounded mr-2">
-                <option value="">Select a strategy</option>
-                <!-- Strategies will be populated here -->
-            </select>
-            <button onclick="fetchStrategies()" class="bg-green-500 text-white px-4 py-2 rounded">Fetch Strategies</button>
-        </div>
 
-        <div class="mb-4">
-            <h2 class="text-xl font-semibold mb-2">Trading Controls</h2>
-            <input type="text" id="symbol" placeholder="Symbol (e.g., BTC/USD)" class="border p-2 rounded mr-2">
-            <input type="number" id="amount" placeholder="Amount" class="border p-2 rounded mr-2">
-            <button onclick="startTrading()" class="bg-purple-500 text-white px-4 py-2 rounded">Start Trading</button>
-            <button onclick="stopTrading()" class="bg-red-500 text-white px-4 py-2 rounded">Stop Trading</button>
-        </div>
 
-        <div>
-            <h2 class="text-xl font-semibold mb-2">Trading Log</h2>
-            <div id="trading-log" class="bg-white p-4 rounded shadow h-40 overflow-y-auto">
-                <!-- Trading logs will appear here -->
-            </div>
-        </div>
-    </div>
+    
+    
+    Test Page
 
-    <script>
-        // Placeholder functions - these would normally communicate with your backend
-        async function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            alert(`Login attempted with username: ${username}`);
-            // In a real app, you'd make an API call here
-        }
 
-        async function fetchStrategies() {
-            // Simulating fetching strategies
-            const strategies = ['Strategy 1', 'Strategy 2', 'Strategy 3'];
-            const select = document.getElementById('strategy-select');
-            select.innerHTML = '<option value="">Select a strategy</option>';
-            strategies.forEach(strategy => {
-                const option = document.createElement('option');
-                option.value = strategy;
-                option.textContent = strategy;
-                select.appendChild(option);
-            });
-            alert('Strategies fetched');
-        }
-
-        async function startTrading() {
-            const strategy = document.getElementById('strategy-select').value;
-            const symbol = document.getElementById('symbol').value;
-            const amount = document.getElementById('amount').value;
-            const log = `Started trading with strategy: ${strategy}, symbol: ${symbol}, amount: ${amount}`;
-            document.getElementById('trading-log').innerHTML += `<p>${log}</p>`;
-        }
-
-        async function stopTrading() {
-            const log = 'Trading stopped';
-            document.getElementById('trading-log').innerHTML += `<p>${log}</p>`;
-        }
-    </script>
-</body>
-</html>
+    Hello, World!
+    This is a test page for GitHub Pages.
